@@ -26,13 +26,7 @@ export default function Register() {
   return (
     <>
       <div className="register-component">
-        <div className="image-container">
-          <img src="../../../../diapason.jpg" alt="violin background image" />
-          <div className="nav"></div>
 
-          <span className="first-span-above-image">DISCOVER UNIQUE</span>
-          <span className="second-span-above-image">MUSICAL TREASURES</span>
-        </div>
         <form
           className="register-form"
           onSubmit={handleSubmit}

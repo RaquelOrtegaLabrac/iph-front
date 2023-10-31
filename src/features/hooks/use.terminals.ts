@@ -45,6 +45,8 @@ export function useTerminals() {
   };
 
   const handleDeleteTerminal = async (id: Terminal["id"]) => {
+    console.log("Deleting terminal with id:", id);
+
     const deletedTerminal = await terminalRepo.deleteTerminal(id);
     dispatch(remove(deletedTerminal));
   };

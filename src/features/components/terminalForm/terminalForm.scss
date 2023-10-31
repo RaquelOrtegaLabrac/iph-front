@@ -1,13 +1,12 @@
 .terminal-form-container {
-  .image-container {
-    background-color: #fff;
-    position: relative;
-    z-index: 1;
-  }
-
-  img {
-    width: 100%;
-    display: block;
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  padding: 30px;
+  @media screen and (min-width: 768px)
+  {
+    width: 50%;
+    margin: 0 auto;
   }
 
   .first-span-above-image,
@@ -26,6 +25,7 @@
     left: 50%;
     transform: translate(0%, -50%);
     z-index: 1;
+
   }
 
   .second-span-above-image {
@@ -91,6 +91,7 @@
       border: none;
       color: #fff;
       background-color: #07bafe;
+      display:block
     }
   }
   input {

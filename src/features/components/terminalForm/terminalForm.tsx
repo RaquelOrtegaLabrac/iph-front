@@ -80,11 +80,6 @@ export default function TerminalForm() {
 
   return (
     <div className="terminal-form-container">
-      <div className="image-container">
-        <img src="../../../../diapason.jpg" alt="background image" />
-        <span className="first-span-above-image">DISCOVER UNIQUE</span>
-        <span className="second-span-above-image">MUSICAL TREASURES</span>
-      </div>
       <form
         aria-label="form"
         className="terminal-form"

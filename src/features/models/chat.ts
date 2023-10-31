@@ -1,10 +1,14 @@
-import { User } from './user';
 
 export type Chat = {
   id: string;
   name: string;
-  participants: User[];
+  participants: Participant[];
   isActive:
   | 'yes'
   | 'no'
 };
+
+export interface Participant {
+  id: string;
+  userName: string;
+}

@@ -24,7 +24,7 @@ export default function Login() {
     }
 
     handleLoginUser(loggedUser);
-    navigate("/");
+    navigate("/dashboard");
     element.reset();
   };
 
@@ -34,13 +34,7 @@ export default function Login() {
         {authError && (
           <p className="error-message">Invalid username or password.</p>
         )}
-        <div className="image-container">
-          <img src="../../../../diapason.jpg" alt="background image" />
-          <div className="nav"></div>
 
-          <span className="first-span-above-image">DISCOVER UNIQUE</span>
-          <span className="second-span-above-image">MUSICAL TREASURES</span>
-        </div>
         <form
           onSubmit={handleSubmit}
           className="login-form"

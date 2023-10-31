@@ -1,5 +1,6 @@
 export class ApiRepository<T extends { id: string | number }> {
-  constructor(public url: string, public token: string) {}
+  constructor(public url: string, public token: string) {    console.log("ApiRepository Token:", this.token); // Agregar este console.log
+}
 
   async getAll(): Promise<T[]> {
     const response = await fetch(this.url);

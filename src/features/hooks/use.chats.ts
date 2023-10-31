@@ -21,6 +21,7 @@ export function useChats() {
     dispatch(load(chats));
   }, [dispatch, chatRepo]);
 
+
   const handleCreateChat = async (chat: FormData) => {
     const newChat = await chatRepo.createChat(chat);
     dispatch(create(newChat));

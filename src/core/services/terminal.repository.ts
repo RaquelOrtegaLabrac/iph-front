@@ -46,6 +46,8 @@ export class TerminalRepository extends ApiRepository<Terminal> {
   }
 
   async deleteTerminal(id: Terminal["id"]): Promise<boolean> {
+    console.log("Deleting terminal with id:", id);
+
     const response = await fetch(`${this.url}terminal/` + id, {
       method: "DELETE",
       headers: {
