@@ -18,7 +18,6 @@ export default function Register() {
 
     const data: Record<string, any> = {};
 
-    // Loop through the inputs and log their values
     Array.from(inputs).forEach((input) => {
       if (input instanceof HTMLInputElement) {
         data[input.name] = input.value;

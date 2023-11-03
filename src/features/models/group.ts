@@ -1,4 +1,6 @@
 import { User } from "./user";
+import { ObjectId } from 'mongodb';
+
 
 export type Group = {
   id: string;
@@ -27,6 +29,7 @@ export interface Terminal {
   | 'medium'
   | 'high'
   isConnected: string;
+  group: ObjectId;
   owner: User;
 
 }

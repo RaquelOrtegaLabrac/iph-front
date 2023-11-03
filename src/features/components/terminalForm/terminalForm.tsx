@@ -1,128 +1,4 @@
-// import { SyntheticEvent, useEffect } from "react";
-// import { useTerminals } from "../../hooks/use.terminals";
-// import { useGroups } from "../../hooks/use.groups";
-// import { useNavigate, useParams } from "react-router-dom";
-// import "./terminalForm.scss";
-
-
-
-// export default function TerminalForm() {
-//   const {handleCreateTerminal} = useTerminals();
-//   const navigate = useNavigate();
-//   const { id } = useParams();
-//   const { groups, handleLoadGroups } = useGroups();
-
-
-//   useEffect(() => {
-//   handleLoadGroups();
-// }, [handleLoadGroups]);
-
-// const handleSubmit = (event: SyntheticEvent) => {
-//   event.preventDefault();
-
-//   const formElement = event.target as HTMLFormElement;
-//   const inputs = formElement.querySelectorAll("input, select");
-
-//   // Create a new FormData object
-//   const data = new FormData();
-
-//   // Loop through the inputs and log their values
-//   Array.from(inputs).forEach((input) => {
-//     if (input instanceof HTMLInputElement) {
-//       console.log(input.name, input.value);
-//       data.append(input.name, input.value);
-//     } else if (input instanceof HTMLSelectElement) {
-//       const selectedValue = input.options[input.selectedIndex].value;
-//       console.log(input.name, selectedValue);
-//       data.append(input.name, selectedValue);
-//     }
-//   });
-
-//   // Log the FormData object before passing it to handleCreateTerminal
-//   console.log("FormData before handleCreateTerminal:", data);
-
-//   // Now, try to pass the FormData object to handleCreateTerminal
-//   // Note: console.log after calling handleCreateTerminal to see its result
-//   handleCreateTerminal(data).then((result) => {
-//     console.log("handleCreateTerminal result:", result);
-//   }).catch((error) => {
-//     console.error("handleCreateTerminal error:", error);
-//   });
-
-//   // Log the FormData object after calling handleCreateTerminal
-//   console.log("FormData after handleCreateTerminal:", data);
-
-//   formElement.reset();
-//   navigate("/dashboard");
-// };
-
-
-
-
-//   return (
-//     <div className="terminal-form-container">
-//       <form
-//         aria-label="form"
-//         className="terminal-form"
-//         id="terminal-form"
-//         onSubmit={handleSubmit}
-//       >
-//         {id ? (
-//           <h2 className="title-form">Edit</h2>
-//         ) : (
-//           <h2 className="title-form">Add</h2>
-//         )}
-//         <h3>SPECIFICATIONS</h3>
-//         <label className="name" htmlFor="name">
-//           Name:{" "}
-//         </label>
-//         <input type="text" placeholder="ex. iphone3" name="name"></input>
-//         <label className="battery" htmlFor="battery">
-//           Battery:{" "}
-//         </label>
-//         <input
-//           type="text"
-//           placeholder="ex. 30%"
-//           name="battery"
-//         ></input>
-//         <label className="wifiLevel" htmlFor="wifiLevel">
-//           WifiLevel{" "}
-//         </label>
-//         <input type="text" placeholder="ex. low" name="wifiLevel"></input>
-//         <label className="isConnected" htmlFor="isConnected">
-//           Is connected?:{" "}
-//         </label>
-//         <input
-//           type="text"
-//           placeholder="..."
-//           name="isConnected"
-//         ></input>
-// <label htmlFor="group">Choose your group:</label>
-// <select id="group" name="group">
-//   <option value="group1">group1</option>
-//   <option value="group2">Group2</option>
-// </select>
-
-//         {id ? (
-//           <button type="submit">Save Changes</button>
-//         ) : (
-//           <button type="submit">Submit</button>
-//         )}
-//       </form>
-//     </div>
-//   );
-
-// }
-
-
-
-
-
-import { useSelector } from "react-redux";
-import { RootState } from "../../../core/store/store";
 import { useGroups } from "../../hooks/use.groups";
-
-
 import { useNavigate, useParams } from "react-router-dom";
 import { useTerminals } from "../../hooks/use.terminals";
 import { SyntheticEvent, useEffect } from "react";
@@ -138,7 +14,6 @@ export default function TerminalForm() {
     handleLoadTerminals,
   } = useTerminals();
   const { id } = useParams();
-  const user = useSelector((state: RootState) => state.users)
   const { groups, handleLoadGroups } = useGroups();
 
   useEffect(() => {
@@ -167,7 +42,7 @@ export default function TerminalForm() {
               (form.elements.namedItem("isConnected") as HTMLInputElement).value =
                 existingTerminal.isConnected;
               (form.elements.namedItem("group") as HTMLSelectElement).value =
-                existingTerminal.group;
+                existingTerminal.group.toString();
                 console.log('EXISTING INSTRUMENT', existingTerminal)
 
           }
@@ -181,13 +56,23 @@ export default function TerminalForm() {
 
     const terminalForm = event.target as HTMLFormElement;
     const groupSelect = terminalForm.elements.namedItem("group") as HTMLSelectElement;
-    const selectedGroup = groupSelect.options[groupSelect.selectedIndex].value;
+    const selectedGroup = groupSelect instanceof HTMLSelectElement ? groupSelect.value : "";
 
-    const terminalData = new FormData(terminalForm);
-    terminalData.set("group", selectedGroup);
+    console.log('Form data before modifications: ', terminalForm);
 
-    console.log(id);
-    console.log('TERMINALFORM: ', terminalData)
+    // const terminalData = new FormData(terminalForm);
+    // terminalData.set("group", selectedGroup);
+
+    const terminalData = new FormData();
+    terminalData.append("name", (terminalForm.elements.namedItem("name") as HTMLInputElement).value);
+    terminalData.append("battery", (terminalForm.elements.namedItem("battery") as HTMLInputElement).value);
+    terminalData.append("wifiLevel", (terminalForm.elements.namedItem("wifiLevel") as HTMLInputElement).value);
+    terminalData.append("isConnected", (terminalForm.elements.namedItem("isConnected") as HTMLInputElement).value);
+    terminalData.append("group", selectedGroup);
+
+    console.log('FormData before sending to backend: ', terminalData);
+    console.log('Selected group:', selectedGroup);
+
 
     if (id) {
       await handleUpdateTerminal(id, terminalData);
@@ -196,32 +81,28 @@ export default function TerminalForm() {
       console.log('TERMINALFORM: ', terminalData)
     }
 
-    navigate("/");
+    navigate("/dashboard");
     terminalForm.reset();
   };
 
-
   // const handleSubmit = async (event: SyntheticEvent) => {
   //   event.preventDefault();
+  //   const terminalForm = event.target as HTMLFormElement;
+  //   const terminalData = new FormData(terminalForm);
+  //   console.log(id);
+  //   console.log('ONE', terminalData)
 
-  //   const formElement = event.target as HTMLFormElement;
-  //   const inputs = formElement.querySelectorAll("input");
-  //   const data = {
-  //     name: inputs[0].value,
-  //     battery: inputs[1].value,
-  //     wifiLevel: inputs[2].value,
-  //     isConnected: inputs[3].value,
-  //     group: inputs[4].value,
-  //     owner: user.currentUser.id,
-  //   } as Partial<Terminal>;
-  //   handleCreateTerminal(data);
-  //   console.log('DATAID', data.id)
-  //       console.log('DATA', data)
+  //   if(id) {
+  //     await handleUpdateTerminal(id, terminalData);
+  //   } else {
+  //     await handleCreateTerminal(terminalData);
+  //     console.log('TWO', terminalData);
 
-  //   formElement.reset()
-
+  //   }
   //   navigate("/dashboard");
-  // };
+  //   terminalForm.reset();
+
+  // }
 
   return (
     <div className="terminal-form-container">
@@ -249,11 +130,11 @@ export default function TerminalForm() {
           placeholder="ex. 30%"
           name="battery"
         ></input>
-        <label className="wifilevel" htmlFor="wifilevel">
+        <label className="wifiLevel" htmlFor="wifiLevel">
           WifiLevel{" "}
         </label>
-        <input type="text" placeholder="ex. low" name="wifilevel"></input>
-        <label className="isconnected" htmlFor="isConnected">
+        <input type="text" placeholder="ex. low" name="wifiLevel"></input>
+        <label className="isConnected" htmlFor="isConnected">
           Is connected?:{" "}
         </label>
         <input
