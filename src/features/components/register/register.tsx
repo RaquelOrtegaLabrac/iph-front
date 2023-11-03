@@ -1,8 +1,10 @@
 import { SyntheticEvent } from "react";
 import { useUsers } from "../../hooks/use.users";
-import { User } from "../../models/user";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.scss";
+
+
+
 
 export default function Register() {
   const { handleRegisterUser } = useUsers();
@@ -12,12 +14,19 @@ export default function Register() {
     event.preventDefault();
 
     const formElement = event.target as HTMLFormElement;
-    const inputs = formElement.querySelectorAll("input");
-    const data = {
-      userName: inputs[0].value,
-      password: inputs[1].value,
-      chat: inputs[2].value,
-    } as unknown as Partial<User>;
+    const inputs = formElement.querySelectorAll("input, select");
+
+    const data: Record<string, any> = {};
+
+    // Loop through the inputs and log their values
+    Array.from(inputs).forEach((input) => {
+      if (input instanceof HTMLInputElement) {
+        data[input.name] = input.value;
+      } else if (input instanceof HTMLSelectElement) {
+        data[input.name] = input.value;
+      }
+    });
+
     handleRegisterUser(data);
     formElement.reset();
     navigate("/");
@@ -67,13 +76,10 @@ export default function Register() {
             <label className="label" htmlFor="chat">
               Choose your chat:{" "}
             </label>
-            <input
-              type="text"
-              id="chat"
-              name="chat"
-              placeholder="Ex. chat1"
-              required
-            />
+            <select id="chat" name="chat" required>
+  <option value="chat1">chat1</option>
+  <option value="chat2">chat2</option>
+</select>
           </div>
           <button className="signup-submit" type="submit">
             SIGN UP

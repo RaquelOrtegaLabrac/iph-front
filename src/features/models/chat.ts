@@ -1,3 +1,4 @@
+import { User } from "./user";
 
 export type Chat = {
   id: string;
@@ -6,6 +7,8 @@ export type Chat = {
   isActive:
   | 'yes'
   | 'no'
+  owner: User;
+
 };
 
 export interface Participant {

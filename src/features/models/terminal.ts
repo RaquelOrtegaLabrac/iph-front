@@ -21,6 +21,6 @@ export type Terminal = {
   | 'medium'
   | 'high'
   isConnected: string;
-  owner: User;
   group: string;
+  owner: User;
 };

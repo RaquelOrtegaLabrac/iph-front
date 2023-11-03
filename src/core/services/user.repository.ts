@@ -18,10 +18,7 @@ export class UserRepository {
       method: "PATCH",
       body: JSON.stringify(item),
       headers: { "Content-Type": "application/json" },
-
     });
     return response.json() as Promise<LoginResponse>;
   }
 }
-
-

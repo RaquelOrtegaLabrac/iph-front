@@ -21,20 +21,19 @@ export function useTerminals() {
     dispatch(load(terminals));
   }, [dispatch, terminalRepo]);
 
-  const handleCreateTerminal = async (terminal: FormData) => {
-    const newTerminal = await terminalRepo.createTerminal(terminal);
-    dispatch(create(newTerminal));
-  };
 
-  const handleUpdateTerminal = async (
-    id: Terminal["id"],
-    updatedTerminal: FormData
-  ) => {
+ const handleCreateTerminal = async (terminal: FormData) => {
+  console.log('NEW TERMINAL', terminal)
+
+  const newTerminal = await terminalRepo.createTerminal(terminal);
+  console.log('NEW TERMINAL2', newTerminal)
+  dispatch(create(newTerminal));
+};
+
+
+  const handleUpdateTerminal = async (id: Terminal["id"], updatedTerminal: FormData) => {
     try {
-      const updatedTerminalData = await terminalRepo.updateTerminal(
-        id,
-        updatedTerminal
-      );
+      const updatedTerminalData = await terminalRepo.updateTerminal(id, updatedTerminal);
       console.log("Updated Terminal Data:", updatedTerminalData);
 
       dispatch(update(updatedTerminalData));
@@ -43,6 +42,7 @@ export function useTerminals() {
       console.error("Error updating terminal:", error);
     }
   };
+
 
   const handleDeleteTerminal = async (id: Terminal["id"]) => {
     console.log("Deleting terminal with id:", id);

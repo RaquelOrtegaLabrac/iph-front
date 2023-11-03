@@ -57,7 +57,9 @@ export default function Dashboard() {
   };
 
   const handleDelete = (id: string | undefined) => {
+    console.log('id in handleDelete', id)
     if (id) {
+
       handleDeleteTerminal(id);
       navigate("/dashboard");
     }
@@ -100,12 +102,12 @@ export default function Dashboard() {
           <h3 className="card-title text-secondary fs-4">{terminal.name}</h3>
           <div className="card-text mb-3">
             Bateria:
-            <ProgressBar now={terminal.battery} label={`${terminal.battery}%`} />
+            <ProgressBar now={Number(terminal.battery)} label={`${terminal.battery}%`} />
           </div>
           <div className="card-text mb-3">
             WiFi:
             <ProgressBar
-              now={getWiFiLevelAsPercentage(terminal.wifiLevel)}
+              now={Number(getWiFiLevelAsPercentage(terminal.wifiLevel))}
               label={terminal.wifiLevel}
             />
           </div>
@@ -144,10 +146,11 @@ export default function Dashboard() {
         <Card.Body>
           <h3 className="card-title text-secondary fs-4">{group.name}</h3>
           <p className="card-text">Terminals:</p>
-          <ul>
+          <ul className="list-group">
             {group.terminals?.map((terminal) => (
-              <li key={terminal.id}>
-                {terminal.name} - {terminal.battery} - {terminal.isConnected}
+              <li key={terminal.id} className="list-group-item">
+                <p>Terminal: {terminal.name}</p>
+                <p>isConnected: {terminal.isConnected}</p>
               </li>
             ))}
           </ul>

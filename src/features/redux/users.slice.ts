@@ -48,15 +48,11 @@ const usersSlice = createSlice({
       ...state,
       users: [...state.users, payload],
     }));
-    builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => {
-      console.log("Token from server (fulfilled):", payload.token);
-
-      return {
-        ...state,
-        currentUser: payload.user,
-        token: payload.token,
-      };
-    });
+    builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => ({
+      ...state,
+      currentUser: payload.user,
+      token: payload.token,
+    }));
 
   },
 });

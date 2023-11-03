@@ -1,6 +1,5 @@
 export class ApiRepository<T extends { id: string | number }> {
-  constructor(public url: string, public token: string) {    console.log("ApiRepository Token:", this.token); // Agregar este console.log
-}
+  constructor(public url: string, public token: string) {}
 
   async getAll(): Promise<T[]> {
     const response = await fetch(this.url);
@@ -26,6 +25,8 @@ export class ApiRepository<T extends { id: string | number }> {
         "Content-Type": "application/json",
       },
     });
+    console.log('BODY ON apiREPO (resposne): ', response)
+
     return response.json() as Promise<T>;
   }
 

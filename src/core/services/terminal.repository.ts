@@ -20,14 +20,48 @@ export class TerminalRepository extends ApiRepository<Terminal> {
     return (await data).items;
   }
 
+
   async createTerminal(item: FormData): Promise<Terminal> {
     const response = await fetch(`${this.url}terminal`, {
       method: "POST",
       body: item,
       headers: { Authorization: "Bearer " + this.token },
     });
+    console.log('RESPONSE IN TERMINALREPO', response)
     return response.json() as Promise<Terminal>;
   }
+
+  // async createTerminal(item: Partial<Terminal>): Promise<Terminal> {
+  //   const formData = new FormData();
+
+  //   // Agrega los campos relevantes a formData
+  //   if (item.name) formData.append('name', item.name.toString());
+  //   if (item.battery) formData.append('battery', item.battery.toString());
+  //   if (item.wifiLevel) formData.append('wifiLevel', item.wifiLevel.toString());
+  //   if (item.isConnected) formData.append('isConnected', item.isConnected.toString());
+  //   if (item.group) formData.append('group', item.group.toString());
+  //   console.log('DATAAAA ')
+  //   for (const value of formData.values()) {
+  //     console.log(value);
+  //   }
+  //   console.log('DATAAA2')
+
+  //   const response = await fetch(`${this.url}terminal`, {
+  //     method: "POST",
+  //     body: JSON.stringify({
+  //       name: formData.get("name"),
+  //       battery: formData.get("battery"),
+  //       wifiLevel: formData.get("wifiLevel"),
+  //       isConnected: formData.get("isConnected"),
+  //       group: formData.get("group"),
+  //     }),
+  //     headers: { Authorization: "Bearer " + this.token },
+  //   });
+  //   console.log(response.json)
+
+  //   return response.json() as Promise<Terminal>;
+  // }
+
 
   async updateTerminal(
     id: Terminal["id"],

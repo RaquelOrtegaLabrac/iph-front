@@ -1,10 +1,12 @@
+import { User } from "./user";
+
 export type Group = {
   id: string;
   name: string;
-  terminals: EachTerminal[];
+  terminals: Terminal[];
 };
 
-export interface EachTerminal {
+export interface Terminal {
   id: string;
   name: string;
   battery:
@@ -25,4 +27,6 @@ export interface EachTerminal {
   | 'medium'
   | 'high'
   isConnected: string;
+  owner: User;
+
 }
