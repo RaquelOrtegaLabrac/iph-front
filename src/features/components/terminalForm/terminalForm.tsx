@@ -22,7 +22,6 @@ export default function TerminalForm() {
 
 
   useEffect(() => {
-    // const loadTerminalData = async () => {
           if (id) {
       const existingTerminal: Terminal = terminals.find(
         (terminal) => terminal.id === id
@@ -42,8 +41,7 @@ export default function TerminalForm() {
               (form.elements.namedItem("isConnected") as HTMLInputElement).value =
                 existingTerminal.isConnected;
               (form.elements.namedItem("group") as HTMLSelectElement).value =
-                existingTerminal.group.toString();
-                console.log('EXISTING INSTRUMENT', existingTerminal)
+                existingTerminal.group;
 
           }
           }
@@ -55,54 +53,25 @@ export default function TerminalForm() {
     event.preventDefault();
 
     const terminalForm = event.target as HTMLFormElement;
-    const groupSelect = terminalForm.elements.namedItem("group") as HTMLSelectElement;
-    const selectedGroup = groupSelect instanceof HTMLSelectElement ? groupSelect.value : "";
 
-    console.log('Form data before modifications: ', terminalForm);
 
-    // const terminalData = new FormData(terminalForm);
-    // terminalData.set("group", selectedGroup);
+    const terminalData = new FormData(terminalForm);
 
-    const terminalData = new FormData();
-    terminalData.append("name", (terminalForm.elements.namedItem("name") as HTMLInputElement).value);
-    terminalData.append("battery", (terminalForm.elements.namedItem("battery") as HTMLInputElement).value);
-    terminalData.append("wifiLevel", (terminalForm.elements.namedItem("wifiLevel") as HTMLInputElement).value);
-    terminalData.append("isConnected", (terminalForm.elements.namedItem("isConnected") as HTMLInputElement).value);
-    terminalData.append("group", selectedGroup);
 
-    console.log('FormData before sending to backend: ', terminalData);
-    console.log('Selected group:', selectedGroup);
 
 
     if (id) {
       await handleUpdateTerminal(id, terminalData);
+
+
     } else {
       await handleCreateTerminal(terminalData);
-      console.log('TERMINALFORM: ', terminalData)
     }
 
     navigate("/dashboard");
     terminalForm.reset();
   };
 
-  // const handleSubmit = async (event: SyntheticEvent) => {
-  //   event.preventDefault();
-  //   const terminalForm = event.target as HTMLFormElement;
-  //   const terminalData = new FormData(terminalForm);
-  //   console.log(id);
-  //   console.log('ONE', terminalData)
-
-  //   if(id) {
-  //     await handleUpdateTerminal(id, terminalData);
-  //   } else {
-  //     await handleCreateTerminal(terminalData);
-  //     console.log('TWO', terminalData);
-
-  //   }
-  //   navigate("/dashboard");
-  //   terminalForm.reset();
-
-  // }
 
   return (
     <div className="terminal-form-container">
@@ -123,7 +92,7 @@ export default function TerminalForm() {
         </label>
         <input type="text" placeholder="ex. iphone3" name="name"></input>
         <label className="battery" htmlFor="battery">
-          Battery:{" "}
+          Battery (%):{" "}
         </label>
         <input
           type="text"
@@ -147,7 +116,7 @@ export default function TerminalForm() {
 </label>
 <select id="group" name="group" required>
   {groups.map((group) => (
-    <option key={group.id} value={group.id}>
+    <option key={group.id} value={group.name}>
       {group.name}
     </option>
   ))}

@@ -36,10 +36,8 @@ export function useChats() {
         id,
         updatedChat
       );
-      console.log("Updated Chat Data:", updatedChatData);
 
       dispatch(update(updatedChatData));
-      console.log("Redux State After Update:", chats); // Asegúrate de ajustar el nombre del estado si es diferente
     } catch (error) {
       console.error("Error updating chat:", error);
     }

@@ -41,7 +41,6 @@ export class ChatRepository extends ApiRepository<Chat> {
       },
     });
     const updatedChat = await response.json();
-    console.log(updatedChat);
     return updatedChat as Chat;
   }
 

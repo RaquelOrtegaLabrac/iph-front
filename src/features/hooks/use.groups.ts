@@ -35,10 +35,8 @@ export function useGroups() {
         id,
         updatedGroup
       );
-      console.log("Updated Group Data:", updatedGroupData);
 
       dispatch(update(updatedGroupData));
-      console.log("Redux State After Update:", groups); // Asegúrate de ajustar el nombre del estado si es diferente
     } catch (error) {
       console.error("Error updating group:", error);
     }

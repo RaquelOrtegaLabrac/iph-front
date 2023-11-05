@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUsers } from "../../hooks/use.users";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../core/store/store";
 import { useTerminals } from "../../hooks/use.terminals";
 import { useChats } from "../../hooks/use.chats";
 import { useGroups } from "../../hooks/use.groups";
-import { Button, Card, ProgressBar } from "react-bootstrap"; // Importa componentes de Bootstrap
+import { Button, Card, ProgressBar } from "react-bootstrap";
 import { getWiFiLevelAsPercentage } from "../utils";
 
 
@@ -17,7 +17,6 @@ export default function Dashboard() {
   const { terminals, handleLoadTerminals, handleDeleteTerminal } = useTerminals();
   const { chats, handleLoadChats } = useChats();
   const { groups, handleLoadGroups } = useGroups();
-  const { id } = useParams();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,6 +32,7 @@ export default function Dashboard() {
   useEffect(() => {
     handleLoadGroups();
   }, [handleLoadGroups]);
+
 
   const { token } = useSelector((state: RootState) => state.users);
 
@@ -55,13 +55,15 @@ export default function Dashboard() {
   const handleAddForm = () => {
     navigate("/create");
   };
+  const handleEditForm = (id: string | undefined) => {
+    navigate("/update/" + id);
+  }
 
   const handleDelete = (id: string | undefined) => {
-    console.log('id in handleDelete', id)
     if (id) {
 
-      handleDeleteTerminal(id);
-      navigate("/dashboard");
+      handleDeleteTerminal(id, token);
+            navigate("/dashboard");
     }
   };
 
@@ -89,7 +91,15 @@ export default function Dashboard() {
             </>
           )}
         </div>
-
+        {token ? (
+                <>
+                  <Button variant="outline-light mt-3" onClick={handleAddForm}>
+                    Add terminal
+                  </Button>
+                </>
+              ) : (
+                <></>
+              )}
         <div className="container my-5 py-4">
           <div className="row">
             <div className="col-12">
@@ -101,7 +111,7 @@ export default function Dashboard() {
         <div className="card-body ">
           <h3 className="card-title text-secondary fs-4">{terminal.name}</h3>
           <div className="card-text mb-3">
-            Bateria:
+            Battery:
             <ProgressBar now={Number(terminal.battery)} label={`${terminal.battery}%`} />
           </div>
           <div className="card-text mb-3">
@@ -111,12 +121,22 @@ export default function Dashboard() {
               label={terminal.wifiLevel}
             />
           </div>
-          <Button variant="dark" className="m-3" onClick={() => navigate(`/update/${terminal.id}`)}>
+          <div>
+           {token ? (
+          <Button variant="dark" className="m-3" onClick={() => handleEditForm(terminal.id)}>
             Edit
           </Button>
+            ) : (
+              <></>
+            )}</div>
+              <div>
+           {token ? (
           <Button variant="danger" onClick={() => handleDelete(terminal.id)}>
             Delete this terminal
           </Button>
+                ) : (
+                  <></>
+                )}</div>
         </div>
       </Card>
     </div>
@@ -160,16 +180,6 @@ export default function Dashboard() {
   ))}
 </div>
 
-
-              {token ? (
-                <>
-                  <Button variant="dark" onClick={handleAddForm}>
-                    Add terminal
-                  </Button>
-                </>
-              ) : (
-                <></>
-              )}
             </div>
           </div>
         </div>

@@ -25,8 +25,6 @@ export class ApiRepository<T extends { id: string | number }> {
         "Content-Type": "application/json",
       },
     });
-    console.log('BODY ON apiREPO (resposne): ', response)
-
     return response.json() as Promise<T>;
   }
 

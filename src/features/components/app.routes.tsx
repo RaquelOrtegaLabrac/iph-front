@@ -19,7 +19,7 @@ export function AppRoutes() {
           element={<TerminalForm></TerminalForm>}
         ></Route>
         <Route
-          path="/update/:id"
+          path="update/:id"
           element={<TerminalForm></TerminalForm>}
         ></Route>
       </Routes>

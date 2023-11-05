@@ -23,32 +23,46 @@ export function useTerminals() {
 
 
  const handleCreateTerminal = async (terminal: FormData) => {
-  console.log('NEW TERMINAL', terminal)
 
   const newTerminal = await terminalRepo.createTerminal(terminal);
-  console.log('NEW TERMINAL2', newTerminal)
   dispatch(create(newTerminal));
 };
 
+const handleUpdateTerminal = async (id: Terminal["id"], updatedTerminal: FormData) => {
+  try {
+    if (id !== undefined) {
+      const updatedTerminalData: Terminal = await terminalRepo.updateTerminal(id, updatedTerminal);
 
-  const handleUpdateTerminal = async (id: Terminal["id"], updatedTerminal: FormData) => {
-    try {
-      const updatedTerminalData = await terminalRepo.updateTerminal(id, updatedTerminal);
-      console.log("Updated Terminal Data:", updatedTerminalData);
 
-      dispatch(update(updatedTerminalData));
-      console.log("Redux State After Update:", terminals); // Asegúrate de ajustar el nombre del estado si es diferente
-    } catch (error) {
-      console.error("Error updating terminal:", error);
+
+      if (updatedTerminalData) {
+        dispatch(update(updatedTerminalData));
+        console.log('1', updatedTerminalData)
+
+
+      } else {
+        console.error("Error updating terminal or no updated data received.");
+      }
+    } else {
+      console.error("ID is undefined. Please provide a valid ID.");
     }
-  };
+  } catch (error) {
+    console.error("Error updating terminal:", error);
+  }
+};
 
 
-  const handleDeleteTerminal = async (id: Terminal["id"]) => {
-    console.log("Deleting terminal with id:", id);
-
-    const deletedTerminal = await terminalRepo.deleteTerminal(id);
-    dispatch(remove(deletedTerminal));
+  const handleDeleteTerminal = async (id: Terminal["id"], token: string | undefined) => {
+    if (token) {
+      const isDeleted = await terminalRepo.deleteTerminal(id, token);
+      if (isDeleted) {
+        dispatch(remove(id));
+      } else {
+        console.error("Failed to delete the terminal with id:", id);
+      }
+    } else {
+      console.error("No token available. Cannot delete terminal.");
+    }
   };
 
   return {

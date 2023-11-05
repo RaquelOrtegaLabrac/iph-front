@@ -27,7 +27,6 @@ export const loginUserAsync = createAsyncThunk<
   { repo: UserRepository; user: Partial<User> }
 >("users/login", async ({ repo, user }) => {
   const result = await repo.login(user);
-  localStorage.setItem("userToken", result.token as string);
   return result;
 });
 
@@ -37,6 +36,7 @@ const usersSlice = createSlice({
   reducers: {
     getToken: (state, { payload }: PayloadAction<string>) => {
       state.token = payload;
+      localStorage.setItem("userToken", payload);
     },
     logoutUser: (state) => ({
       ...state,
@@ -48,12 +48,11 @@ const usersSlice = createSlice({
       ...state,
       users: [...state.users, payload],
     }));
-    builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => ({
-      ...state,
-      currentUser: payload.user,
-      token: payload.token,
-    }));
-
+    builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => {
+      state.currentUser = payload.user;
+      state.token = payload.token;
+      localStorage.setItem("userToken", payload.token);
+    });
   },
 });
 

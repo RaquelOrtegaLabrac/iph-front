@@ -41,7 +41,6 @@ export class GroupRepository extends ApiRepository<Group> {
       },
     });
     const updatedGroup = await response.json();
-    console.log(updatedGroup);
     return updatedGroup as Group;
   }
 
