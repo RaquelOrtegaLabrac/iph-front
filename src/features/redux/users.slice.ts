@@ -6,7 +6,7 @@ import { LoginResponse } from "../../core/types/api.response";
 export type UsersState = {
   users: User[];
   currentUser: Partial<User>;
-  token?: string;
+  token?: string; 
 };
 
 const initialState: UsersState = {
