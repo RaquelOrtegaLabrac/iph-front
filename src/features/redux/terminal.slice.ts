@@ -22,10 +22,12 @@ const terminalsSlice = createSlice({
     }),
     update: (state, action: PayloadAction<Terminal>) => {
       const updatedTerminal = action.payload;
+      console.log("Received updated terminal:", updatedTerminal);
 
       state.terminals = state.terminals.map((terminal) =>
         terminal.id === updatedTerminal.id ? updatedTerminal : terminal
       );
+      console.log('ACTION.PAYLOAD', action.payload);
 
     },
     remove: (state, action) => {

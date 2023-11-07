@@ -25,6 +25,7 @@ export class ApiRepository<T extends { id: string | number }> {
         "Content-Type": "application/json",
       },
     });
+
     return response.json() as Promise<T>;
   }
 

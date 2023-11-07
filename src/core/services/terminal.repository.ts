@@ -36,6 +36,7 @@ async createTerminal(item: FormData): Promise<Terminal> {
     },
   });
 
+
   return response.json() as Promise<Terminal>;
 }
 
@@ -43,10 +44,11 @@ async createTerminal(item: FormData): Promise<Terminal> {
 
 
 
-  async updateTerminal(
-    id: Terminal["id"],
-    item: FormData
+async updateTerminal(
+  id: Terminal["id"],
+  item: FormData
   ): Promise<Terminal> {
+    console.log('name', item.get('name'))
     const groupName = item.get('group');
 
 
@@ -58,12 +60,13 @@ async createTerminal(item: FormData): Promise<Terminal> {
         id
       }),
       headers: {
-        Authorization: "Bearer " + this.token,
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + this.token
       },
     });
     const updatedTerminal = await response.json();
     console.log('UPDATED TERMINAL',updatedTerminal)
+    console.log(item.get('name'))
     return updatedTerminal as Terminal;
   }
 
