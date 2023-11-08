@@ -34,11 +34,11 @@ export default function TerminalForm() {
                       const form = document.querySelector(".terminal-form") as HTMLFormElement;
               (form.elements.namedItem("name") as HTMLInputElement).value =
                 existingTerminal.name;
-              (form.elements.namedItem("battery") as HTMLInputElement).value =
+              (form.elements.namedItem("battery") as HTMLSelectElement).value =
                 existingTerminal.battery;
-              (form.elements.namedItem("wifiLevel") as HTMLInputElement).value =
+              (form.elements.namedItem("wifiLevel") as HTMLSelectElement).value =
                 existingTerminal.wifiLevel;
-              (form.elements.namedItem("isConnected") as HTMLInputElement).value =
+              (form.elements.namedItem("isConnected") as HTMLSelectElement).value =
                 existingTerminal.isConnected;
               (form.elements.namedItem("group") as HTMLSelectElement).value =
                 existingTerminal.group;
@@ -92,25 +92,36 @@ export default function TerminalForm() {
         </label>
         <input type="text" placeholder="ex. iphone3" name="name"></input>
         <label className="battery" htmlFor="battery">
-          Battery (%):{" "}
+          Battery:{" "}
         </label>
-        <input
-          type="text"
-          placeholder="ex. 30%"
-          name="battery"
-        ></input>
+        <select id="battery" name="battery" required>
+  <option value="0">0%</option>
+  <option value="10">10%</option>
+  <option value="20">20%</option>
+  <option value="30">30%</option>
+  <option value="40">40%</option>
+  <option value="50">50%</option>
+  <option value="60">60%</option>
+  <option value="70">70%</option>
+  <option value="80">80%</option>
+  <option value="90">90%</option>
+  <option value="100">100%</option>
+
+</select>
         <label className="wifiLevel" htmlFor="wifiLevel">
           WifiLevel{" "}
         </label>
-        <input type="text" placeholder="ex. low" name="wifiLevel"></input>
+        <select id="wifiLevel" name="wifiLevel" required>
+  <option value="low">low</option>
+  <option value="high">high</option>
+</select>
         <label className="isConnected" htmlFor="isConnected">
           Is connected?:{" "}
         </label>
-        <input
-          type="text"
-          placeholder="..."
-          name="isConnected"
-        ></input>
+        <select id="isConnected" name="isConnected" required>
+  <option value="yes">yes</option>
+  <option value="no">no</option>
+</select>
     <label className="label" htmlFor="group">
   Choose your group:{" "}
 </label>
