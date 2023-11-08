@@ -37,7 +37,6 @@ const handleUpdateTerminal = async (id: Terminal["id"], updatedTerminal: FormDat
 
       if (updatedTerminalData) {
         dispatch(update(updatedTerminalData));
-        console.log('1', updatedTerminalData)
 
 
       } else {

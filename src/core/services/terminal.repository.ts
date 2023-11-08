@@ -48,7 +48,6 @@ async updateTerminal(
   id: Terminal["id"],
   item: FormData
   ): Promise<Terminal> {
-    console.log('name', item.get('name'))
     const groupName = item.get('group');
 
 
@@ -65,8 +64,7 @@ async updateTerminal(
       },
     });
     const updatedTerminal = await response.json();
-    console.log('UPDATED TERMINAL',updatedTerminal)
-    console.log(item.get('name'))
+
     return updatedTerminal as Terminal;
   }
 

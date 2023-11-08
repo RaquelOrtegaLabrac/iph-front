@@ -104,81 +104,81 @@ export default function Dashboard() {
           <div className="row">
             <div className="col-12">
             <h2 className="h2 mb-3 text-light">Terminals</h2>
-<div className="row justify-content-center">
-  {terminals.map((terminal) => (
-    <div key={terminal.id} className="col-12 col-md-6 col-lg-4">
-      <Card className="my-3">
-        <div className="card-body ">
-          <h3 className="card-title text-secondary fs-4">{terminal.name}</h3>
-          <div className="card-text mb-3">
-            Battery:
-            <ProgressBar now={Number(terminal.battery)} label={`${terminal.battery}%`} />
-          </div>
-          <div className="card-text mb-3">
-            WiFi:
-            <ProgressBar
-              now={Number(getWiFiLevelAsPercentage(terminal.wifiLevel))}
-              label={terminal.wifiLevel}
-            />
-          </div>
-          <div>
-           {token ? (
-          <Button variant="dark" className="m-3" onClick={() => handleEditForm(terminal.id)}>
-            Edit
-          </Button>
-            ) : (
-              <></>
-            )}</div>
-              <div>
-           {token ? (
-          <Button variant="danger" onClick={() => handleDelete(terminal.id)}>
-            Delete this terminal
-          </Button>
-                ) : (
-                  <></>
-                )}</div>
-        </div>
-      </Card>
-    </div>
-  ))}
-</div>
+            <div className="row justify-content-center">
+              {terminals.map((terminal) => (
+                <div key={terminal.id} className="col-12 col-md-6 col-lg-4">
+                  <Card className="my-3">
+                    <div className="card-body ">
+                      <h3 className="card-title text-secondary fs-4">{terminal.name}</h3>
+                      <div className="card-text mb-3">
+                        Battery:
+                        <ProgressBar now={Number(terminal.battery)} label={`${terminal.battery}%`} />
+                      </div>
+                      <div className="card-text mb-3">
+                        WiFi:
+                        <ProgressBar
+                          now={Number(getWiFiLevelAsPercentage(terminal.wifiLevel))}
+                          label={terminal.wifiLevel}
+                        />
+                      </div>
+                      <div>
+                      {token ? (
+                      <Button variant="dark" className="m-3" onClick={() => handleEditForm(terminal.id)}>
+                        Edit
+                      </Button>
+                        ) : (
+                          <></>
+                        )}</div>
+                          <div>
+                      {token ? (
+                      <Button variant="danger" onClick={() => handleDelete(terminal.id)}>
+                        Delete this terminal
+                      </Button>
+                            ) : (
+                              <></>
+                            )}</div>
+                    </div>
+                  </Card>
+                </div>
+              ))}
+            </div>
 
-<h2 className="h2 mb-3 text-light">Chats</h2>
-<div className="row justify-content-center">
-  {chats.map((chat) => (
-    <div key={chat.id} className="col-12 col-md-6 col-lg-4">
-      <Card className="my-3">
-        <Card.Body>
-          <h3 className="card-title text-secondary fs-4">{chat.name}</h3>
-          <p className="card-text">Participants:</p>
-          <p className="card-text text display-1 text-center">{chat.participants.length}</p>
-        </Card.Body>
-      </Card>
-    </div>
-  ))}
-</div>
+            <h2 className="h2 mb-3 text-light">Chats</h2>
+            <div className="row justify-content-center">
+              {chats.map((chat) => (
+                <div key={chat.id} className="col-12 col-md-6 col-lg-4">
+                  <Card className="my-3">
+                    <Card.Body>
+                      <h3 className="card-title text-secondary fs-4">{chat.name}</h3>
+                      <p className="card-text">Participants:</p>
+                      <p className="card-text text display-1 text-center">{chat.participants.length}</p>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))}
+            </div>
 
-<h2 className="h2 mb-3 text-light">Groups</h2>
-<div className="row justify-content-center">
-  {groups.map((group) => (
-    <div key={group.id} className="col-12 col-md-6 col-lg-4">
-      <Card className="card my-3">
-        <Card.Body>
-          <h3 className="card-title text-secondary fs-4">{group.name}</h3>
-          <p className="card-text">Terminals:</p>
-          <ul className="list-group">
-            {group.terminals?.map((terminal) => (
-              <li key={terminal.id} className="list-group-item">
-                <p>Terminal: {terminal.name}</p>
-                <p>isConnected: {terminal.isConnected}</p>
-              </li>
-            ))}
-          </ul>
-        </Card.Body>
-      </Card>
-    </div>
-  ))}
-</div>
+            <h2 className="h2 mb-3 text-light">Groups</h2>
+            <div className="row justify-content-center">
+              {groups.map((group) => (
+                <div key={group.id} className="col-12 col-md-6 col-lg-4">
+                  <Card className="card my-3">
+                    <Card.Body>
+                      <h3 className="card-title text-secondary fs-4">{group.name}</h3>
+                      <p className="card-text">Terminals:</p>
+                      <ul className="list-group">
+                        {group.terminals?.map((terminal) => (
+                          <li key={terminal.id} className="list-group-item">
+                            <p>Terminal: {terminal.name}</p>
+                            <p>isConnected: {terminal.isConnected}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </Card.Body>
+                  </Card>
+                </div>
+              ))}
+            </div>
 
             </div>
           </div>
@@ -186,4 +186,4 @@ export default function Dashboard() {
       </section>
     </div>
   );
-              }
+ }
