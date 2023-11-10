@@ -12,7 +12,7 @@ export type UsersState = {
 const initialState: UsersState = {
   users: [] as User[],
   currentUser: {} as Partial<User>,
-  token: localStorage.getItem("userToken") as string | undefined,
+  token: localStorage.getItem("user token") as string | undefined,
 };
 
 export const registerUserAsync = createAsyncThunk<
@@ -27,6 +27,8 @@ export const loginUserAsync = createAsyncThunk<
   { repo: UserRepository; user: Partial<User> }
 >("users/login", async ({ repo, user }) => {
   const result = await repo.login(user);
+  console.log("Token recibido del backend:", result.token);
+
   return result;
 });
 
@@ -39,7 +41,7 @@ const usersSlice = createSlice({
       localStorage.setItem("userToken", payload);
     },
     logoutUser: (state) => ({
-      ...state,
+      ...state, 
       token: undefined,
     }),
   },
@@ -50,8 +52,10 @@ const usersSlice = createSlice({
     }));
     builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => {
       state.currentUser = payload.user;
+      console.log('currentUser', payload)
       state.token = payload.token;
-      localStorage.setItem("userToken", payload.token);
+      console.log('TOKEN EN LOGIN USERASYNC', payload.token)
+      localStorage.setItem("user token", payload.token);
     });
   },
 });

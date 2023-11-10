@@ -1,4 +1,9 @@
 .login-component {
+
+  .error-message {
+  color: red;
+  padding-left: 2.5%;
+}
   .image-container {
     background-color: #fff;
     position: relative;
@@ -100,4 +105,5 @@
       background-color: #07bafe;
     }
   }
+
 }

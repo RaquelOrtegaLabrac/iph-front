@@ -22,17 +22,19 @@ export function useUsers() {
     await dispatch(loginUserAsync({ repo, user }));
     const loggedUser = store.getState().users.currentUser;
 
-    localStorage.setItem("userToken", loggedUser.token as string);
+    localStorage.setItem("user token", loggedUser.token as string);
+    console.log('handleLoginUser', token)
 
   };
 
   const handleGetToken = (token: string) => {
     dispatch(ac.getToken(token));
+    console.log('handleGetToken', token)
   };
 
   const handleLogoutUser = () => {
     dispatch(ac.logoutUser());
-    localStorage.removeItem("userToken");
+    localStorage.removeItem("user token");
   };
 
   return {
