@@ -21,7 +21,7 @@ export class UserRepository {
       body: JSON.stringify(item),
       headers: { "Content-Type": "application/json" },
     });
-    console.log("Respuesta del back, repo:", response);
+
 
     return response.json() as Promise<LoginResponse>;
     
