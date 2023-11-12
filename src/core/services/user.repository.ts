@@ -14,7 +14,6 @@ export class UserRepository {
   }
 
   async login(item: Partial<User>): Promise<LoginResponse> {
-    console.log("Datos a enviar al back:", item);
 
     const response = await fetch(this.url + "user/login", {
       method: "PATCH",

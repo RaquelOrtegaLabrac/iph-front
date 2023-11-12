@@ -23,13 +23,11 @@ export function useUsers() {
     const loggedUser = store.getState().users.currentUser;
 
     localStorage.setItem("user token", loggedUser.token as string);
-    console.log('handleLoginUser', token)
 
   };
 
   const handleGetToken = (token: string) => {
     dispatch(ac.getToken(token));
-    console.log('handleGetToken', token)
   };
 
   const handleLogoutUser = () => {

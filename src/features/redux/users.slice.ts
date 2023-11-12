@@ -27,7 +27,6 @@ export const loginUserAsync = createAsyncThunk<
   { repo: UserRepository; user: Partial<User> }
 >("users/login", async ({ repo, user }) => {
   const result = await repo.login(user);
-  console.log("Token recibido del backend:", result.token);
 
   return result;
 });
@@ -52,9 +51,7 @@ const usersSlice = createSlice({
     }));
     builder.addCase(loginUserAsync.fulfilled, (state, { payload }) => {
       state.currentUser = payload.user;
-      console.log('currentUser', payload)
       state.token = payload.token;
-      console.log('TOKEN EN LOGIN USERASYNC', payload.token)
       localStorage.setItem("user token", payload.token);
     });
   },
